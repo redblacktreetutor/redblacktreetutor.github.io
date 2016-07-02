@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Red-black Tree Lecture</title>
+	<meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+        <link rel="icon" 
+      type="image/png" >
+    <meta property="og:image" content="images/thumbnail.gif" />
+    <meta property="og:description" content="Red-black Tree Lecture" />
+
+    <!-- JS for display red black tree -->
+	<script type="text/javascript" src="js/jquery.js"></script>
+	<script type="text/javascript" src="js/binaryTree.js"></script>
+	<script type="text/javascript" src="js/main.js"></script>
+
+	<!-- Custom Fonts -->
+	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+	<!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="css/bootstrap.min.css" type="text/css">
+    <!-- Custom CSS -->
+    <!-- <link rel="stylesheet" href="css/style.css" type="text/css"> -->
+    <link rel="stylesheet" href="css/creative.css" type="text/css">
+
+    <!-- LaTeX -->
+    <script type="text/javascript" async
+      src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML">
+    </script>
+
+</head>
+<body>
+	<nav id="mainNav" class="navbar navbar-default navbar-fixed-top">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand page-scroll" href="#">
+                    <i class="material-icons">navigation</i>
+                </a>
+            </div>
+
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav navbar-right"> 
+                    <li>
+                        <a class="page-scroll" href="#intro">Introduction</a>
+                    </li>
+                    <li>
+                        <a class="page-scroll" href="#insertion">Insertion</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <header>
+    	<div class="header-content">
+    		<div class="header-content-inner">
+    			<h1 style="font-size:90px">
+                    <span style="color: #e23e4a;">Red</span>
+                    <span style="color: black;">black</span>
+                     TREES
+                </h1>
+    		</div>
+    	</div>
+    </header>
+
+    <section class="bg-primary" id="intro">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h1 class="section-heading">Introduction</h2>
+                    <br>
+                    <p class="text-faded text-left">
+                        While generally having \( O(\log N) \) complexity for its operations, binary search tree encounters the worst case when the input sequence is sorted. In this case the tree is completely skewed to one side and consequently no different from an array.
+                        <br>
+                        For example, given the input sequence
+                        $$1 \quad 2 \quad 3 \quad 4 \quad 5,$$
+                        the output tree is
+                        <canvas id="worstBinaryTree"></canvas>
+                        A <em>balanced binary search tree</em> imposes further rules and restrictions so that it has guaranteed logarithmic depth even in the worst case. For red-black trees, those rules are as follows:
+                        <ul class="colored-list">
+                            <li>Each node is colored either red or black. <code>null</code> nodes are considered black.</li>
+                            <li>The root of the tree is black.</li>
+                            <li>There are no two consecutive red nodes. If a node is red, its children must be black.</li>
+                            <li>Every path from a node to a <code>null</code> node must contain the same number of black nodes.</li>
+                        </ul>
+                        We can then <a href="http://doctrina.org/maximum-height-of-red-black-tree.html">show that</a> if every path from the root to a <code>null</code> contains \(b\) black nodes, the tree must contain at least \(2^b - 1\) black nodes. Furthermore, the root is black and there are no two consecutive red nodes. These imply that the maximum height of a red-black tree is \(2 \log(N + 1) \).
+                    </p>
+                    <center><a href="#insertion" class="btn btn-default btn-xl page-scroll wow rubberBand">Next</a></center>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="insertion" class="bg-inverse">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h1 class="section-heading">Insertion Rules</h1>
+                    <br>
+                    <p class="text-faded text-left">
+                        To preserve the above properties, the algorithm for top-down insertion is as follows:
+                        <ul class="colored-list">
+                            <li>Let \(X\) be the current node.</li>
+                            <li>
+                                If \(X\) is black and has 2 red children:
+                                <ol>
+                                    <li>Make \(X\) red and its children black.</li>
+                                    <li>If \(X\)'s parent is red, perform single or double rotation.</li>
+                                </ol>
+                            </li>
+                            <li>
+                                If \(X\) is a red leaf node:
+                                <ol>
+                                    <li>Add the new red node as \(X\)'s child.</li>
+                                    <li>Perform rotation on the newly added node.</li>
+                                </ol> 
+                            </li>
+                            <li>Otherwise, traverse to the next level.</li>
+                        </ul> 
+                    </p>
+
+                    <!-- COLOR FLIP -->
+                    <h2>Color flip</h2>
+                    <strong>If \(X\) is black and has 2 red children, we can perform a color flip, making \(X\) red and its children black.</strong> The path from the root to any <code>null</code> leaf in the subtree starting at \(X\) therefore retains its number of black nodes, while we can guarantee that the next current node (which is either of \(X\)'s children) is black.
+                    <canvas id="colorFlip"></canvas>
+                    However, if \(X\)'s parent is red then color flip yields two consecutive red nodes. To solve this problem, we perform a rotation based on the position of \(X\) relative to its parent and grandparent.
+
+
+                    <!-- SINGLE ROTATION -->
+                    <h2>Single rotation</h2>
+                    We say \(X\) is an outer node when either 
+                    <center><code>X.value < X.parent.value < X.grandparent.value</code></center>
+                    or 
+                    <center><code>X.value > X.parent.value > X.grandparent.value.</code></center>
+                    In other words, \(X\) is &quot;outside&quot; of its parent and grandparent.
+                    <canvas id="outerNode"></canvas>
+                    If \(X\) and its parent are red and \(X\) is an outer node, we perform a single rotation as follows:
+                    <canvas id="singleRotation"></canvas>
+
+                    <!-- DOUBLE ROTATION -->
+                    <h2>Double rotation </h2>
+                    We say \(X\) is an inner node when either
+                    <center><code>X.grandparent.value > X.value > X.parent.value</code></center>
+                    or
+                    <center><code>X.parent.value > X.value > X.grandparent.value.</code></center>In other words, \(X\) is &quot;between&quot; its parent and grandparent.
+                    <canvas id="innerNode"></canvas>
+                    If \(X\) and its parent are red and \(X\) is an inner node, we perform a double rotation as follows:
+                    <canvas id="doubleRotation"></canvas>
+
+                    <h2>References</h2>
+                    Weiss, M. A. (2010). <cite>Data structures & problem solving using Java</cite>. Boston : Pearson/Addison Wesley, c2010.
+                    <br>          
+                    <a href="http://www.freepik.com/free-photos-vectors/background">Background vector designed by Freepik and Wassim Gharbi.</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- JS for special effects -->
+    <script src="js/jquery.easing.min.js"></script>
+    <script src="js/jquery.fittext.js"></script>
+    <script src="js/wow.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/creative.js"></script>
+</body>
+</html>
