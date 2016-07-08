@@ -14,6 +14,9 @@ function Node(value, color, left, right, parent) {
 
 	this.draw = function( ctx ) {
 
+		ctx.strokeStyle = "black";
+		ctx.lineWidth = 1;
+
 		if (this.left !== null ) {
 			ctx.beginPath();
 			ctx.moveTo( this.x, this.y );
@@ -72,14 +75,23 @@ function Node(value, color, left, right, parent) {
 		var maxHeightRight = (this.right === null) ? 0 : this.right.findMaxHeight();
 		return 1 + Math.max( maxHeightRight, maxHeightLeft );
 	}
+
+	this.highlight = function ( ctx ) {
+		ctx.beginPath();
+		ctx.arc( this.x, this.y, this.RADIUS, 0, 2 * Math.PI, false);
+		ctx.lineWidth = 10;
+		ctx.strokeStyle = "yellow";
+		ctx.stroke();
+		ctx.closePath();
+	}
 }
 
 
 function BinarySearchTree(array, ctx, startX, startY) {
 
 	var root = null;
-	var GAP_X = 100;
-	var GAP_Y = 80;
+	var GAP_X = 70;
+	var GAP_Y = 70;
 
 	function add( val ) {
 		var node = new Node( val, "#27ae60", null, null, null );
@@ -225,5 +237,9 @@ function BinarySearchTree(array, ctx, startX, startY) {
 		var y = root.y - 70;
 		ctx.fillStyle = "#2c3e50";
 		ctx.fillText( text, x, y );
+	}
+
+	this.highlightCurrentNode = function ( currentValue ) {
+		find( currentValue ).highlight( ctx );
 	}
 }

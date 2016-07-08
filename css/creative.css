@@ -49,6 +49,9 @@ p {
     line-height: 1.5;
 }
 
+span.highlight {
+    background-color: yellow;
+}
 
 .bg-primary {
     background-color: white;

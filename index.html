@@ -20,7 +20,6 @@
 	<!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="css/bootstrap.min.css" type="text/css">
     <!-- Custom CSS -->
-    <!-- <link rel="stylesheet" href="css/style.css" type="text/css"> -->
     <link rel="stylesheet" href="css/creative.css" type="text/css">
 
     <!-- LaTeX -->
@@ -59,10 +58,10 @@
 
     <header>
     	<div class="header-content">
-    		<div class="header-content-inner">
+    		<div class="header-content-inside">
     			<h1 style="font-size:90px">
-                    <span style="color: #e23e4a;">Red</span>
-                    <span style="color: black;">black</span>
+                    <span style="color: #e23e4a;">RED</span>
+                    <span style="color: black;">BLACK</span>
                      TREES
                 </h1>
     		</div>
@@ -91,7 +90,6 @@
                         </ul>
                         We can then <a href="http://doctrina.org/maximum-height-of-red-black-tree.html">show that</a> if every path from the root to a <code>null</code> contains \(b\) black nodes, the tree must contain at least \(2^b - 1\) black nodes. Furthermore, the root is black and there are no two consecutive red nodes. These imply that the maximum height of a red-black tree is \(2 \log(N + 1) \).
                     </p>
-                    <center><a href="#insertion" class="btn btn-default btn-xl page-scroll wow rubberBand">Next</a></center>
                 </div>
             </div>
         </div>
@@ -104,7 +102,7 @@
                     <h1 class="section-heading">Insertion Rules</h1>
                     <br>
                     <p class="text-faded text-left">
-                        To preserve the above properties, the algorithm for top-down insertion is as follows:
+                        To preserve the above properties, the algorithm for top-down insertion is as follows. We try to make sure the next node we encounter is black so that a red leaf can be added. In case there has to be 2 consecutive red nodes, a rotation is performed to resolve the issue.
                         <ul class="colored-list">
                             <li>Let \(X\) be the current node.</li>
                             <li>
@@ -115,42 +113,44 @@
                                 </ol>
                             </li>
                             <li>
-                                If \(X\) is a red leaf node:
+                                If \(X\) is a leaf node:
                                 <ol>
                                     <li>Add the new red node as \(X\)'s child.</li>
-                                    <li>Perform rotation on the newly added node.</li>
+                                    <li>If \(X\) is also red, perform rotation on the newly added node.</li>
                                 </ol> 
                             </li>
                             <li>Otherwise, traverse to the next level.</li>
+                            <li>If the root is made red in the process, recolor it black.</li>
                         </ul> 
                     </p>
+                    The current node is <span class="highlight">highlighted</span> in the below illustrations.
 
                     <!-- COLOR FLIP -->
                     <h2>Color flip</h2>
-                    <strong>If \(X\) is black and has 2 red children, we can perform a color flip, making \(X\) red and its children black.</strong> The path from the root to any <code>null</code> leaf in the subtree starting at \(X\) therefore retains its number of black nodes, while we can guarantee that the next current node (which is either of \(X\)'s children) is black.
+                    <strong>If \(X\) is black and has 2 red children, we can perform a color flip at \(X\), making \(X\) red and its children black.</strong>
                     <canvas id="colorFlip"></canvas>
                     However, if \(X\)'s parent is red then color flip yields two consecutive red nodes. To solve this problem, we perform a rotation based on the position of \(X\) relative to its parent and grandparent.
 
 
                     <!-- SINGLE ROTATION -->
                     <h2>Single rotation</h2>
-                    We say \(X\) is an outer node when either 
+                    We say \(X\) is an outside node when either 
                     <center><code>X.value < X.parent.value < X.grandparent.value</code></center>
                     or 
                     <center><code>X.value > X.parent.value > X.grandparent.value.</code></center>
                     In other words, \(X\) is &quot;outside&quot; of its parent and grandparent.
-                    <canvas id="outerNode"></canvas>
-                    If \(X\) and its parent are red and \(X\) is an outer node, we perform a single rotation as follows:
+                    <canvas id="outsideNode"></canvas>
+                    <strong>If \(X\) and its parent are red and \(X\) is an outside node, we perform a single rotation at \(X\) as follows:</strong>
                     <canvas id="singleRotation"></canvas>
 
                     <!-- DOUBLE ROTATION -->
                     <h2>Double rotation </h2>
-                    We say \(X\) is an inner node when either
+                    We say \(X\) is an inside node when either
                     <center><code>X.grandparent.value > X.value > X.parent.value</code></center>
                     or
                     <center><code>X.parent.value > X.value > X.grandparent.value.</code></center>In other words, \(X\) is &quot;between&quot; its parent and grandparent.
-                    <canvas id="innerNode"></canvas>
-                    If \(X\) and its parent are red and \(X\) is an inner node, we perform a double rotation as follows:
+                    <canvas id="insideNode"></canvas>
+                    <strong>If \(X\) and its parent are red and \(X\) is an inside node, we perform a double rotation at \(X\) as follows:</strong>
                     <canvas id="doubleRotation"></canvas>
 
                     <h2>References</h2>
