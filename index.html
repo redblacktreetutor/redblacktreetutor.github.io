@@ -103,47 +103,47 @@
                     <br>
                     <p class="text-faded text-left">
                         To preserve the above properties, the algorithm for top-down insertion is as follows. We try to make sure the next node we encounter is black so that a red leaf can be added. In case there has to be 2 consecutive red nodes, a rotation is performed to resolve the issue.
-                        <ul class="colored-list">
-                            <li>Let \(X\) be the current node.</li>
-                            <li>
-                                If \(X\) is black and has 2 red children:
-                                <ol>
-                                    <li>Make \(X\) red and its children black.</li>
-                                    <li>If \(X\)'s parent is red, perform single or double rotation.</li>
-                                </ol>
-                            </li>
-                            <li>
-                                If \(X\) is a leaf node:
-                                <ol>
-                                    <li>Add the new red node as \(X\)'s child.</li>
-                                    <li>If \(X\) is also red, perform rotation on the newly added node.</li>
-                                </ol> 
-                            </li>
-                            <li>Otherwise, traverse to the next level.</li>
-                            <li>If the root is made red in the process, recolor it black.</li>
-                        </ul> 
+                    <ul class="colored-list">
+                        <li>Let \(X\) be the current node.</li>
+                        <li>
+                            If \(X\) is black and has two red children:
+                            <ol>
+                                <li>Make \(X\) red and its children black.</li>
+                                <li>If \(X\)'s parent is red, perform single or double rotation.</li>
+                            </ol>
+                        </li>
+                        <li>
+                            If \(X\) is a leaf node:
+                            <ol>
+                                <li>Add the new red node as \(X\)'s child.</li>
+                                <li>If \(X\) is also red, perform rotation on the newly added node.</li>
+                            </ol>
+                        </li>
+                        <li>Otherwise, traverse to the next level.</li>
+                        <li>If the root is made red in the process, recolor it black.</li>
+                    </ul>
                     </p>
                     The current node is <span class="highlight">highlighted</span> in the below illustrations.
 
                     <!-- COLOR FLIP -->
                     <h2>Color flip</h2>
-                    <strong>If \(X\) is black and has 2 red children, we can perform a color flip at \(X\), making \(X\) red and its children black.</strong>
-                    <canvas id="colorFlip"></canvas>
+                    <strong>If \(X\) is black and has two red children, we can perform a color flip at \(X\), making \(X\) red and its children black.</strong>
+                    <canvas id="colorFlipInsertion"></canvas>
                     However, if \(X\)'s parent is red then color flip yields two consecutive red nodes. To solve this problem, we perform a rotation based on the position of \(X\) relative to its parent and grandparent.
 
 
-                    <!-- SINGLE ROTATION -->
+                    <!-- SINGLE ROTATION INSERTION-->
                     <h2>Single rotation</h2>
-                    We say \(X\) is an outside node when either 
+                    We say \(X\) is an outside node when either
                     <center><code>X.value < X.parent.value < X.grandparent.value</code></center>
-                    or 
+                    or
                     <center><code>X.value > X.parent.value > X.grandparent.value.</code></center>
                     In other words, \(X\) is &quot;outside&quot; of its parent and grandparent.
                     <canvas id="outsideNode"></canvas>
                     <strong>If \(X\) and its parent are red and \(X\) is an outside node, we perform a single rotation at \(X\) as follows:</strong>
-                    <canvas id="singleRotation"></canvas>
+                    <canvas id="singleRotationInsertion"></canvas>
 
-                    <!-- DOUBLE ROTATION -->
+                    <!-- DOUBLE ROTATION INSERTION -->
                     <h2>Double rotation </h2>
                     We say \(X\) is an inside node when either
                     <center><code>X.grandparent.value > X.value > X.parent.value</code></center>
@@ -151,11 +151,89 @@
                     <center><code>X.parent.value > X.value > X.grandparent.value.</code></center>In other words, \(X\) is &quot;between&quot; its parent and grandparent.
                     <canvas id="insideNode"></canvas>
                     <strong>If \(X\) and its parent are red and \(X\) is an inside node, we perform a double rotation at \(X\) as follows:</strong>
-                    <canvas id="doubleRotation"></canvas>
+                    <canvas id="doubleRotationInsertion"></canvas>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="deletion" class="bg-inverse">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h1 class="section-heading">Deletion Rules</h1>
+                    <br>
+                    <p class="text-faded text-left">
+                        The algorithm for top-down deletion is as follows. We try to make sure the next node we encounter is a red leaf so that it can be deleted.
+                        In case we encounter a black node, depending on its sibling and children, an appropriate rotation can be performed.
+                    <ul class="colored-list">
+                        <li>Let \(X\) be the current node.</li>
+                        <li>
+                            If \(X\) is black and has two black children, consider its sibling \(T\):
+                            <ul>
+                                <li>If \(T\) has two black children, perform a color flip.</li>
+                                <li>If \(T\) has an outer red child, perform a single rotation.</li>
+                                <li>If \(T\) has an inner red child, perform a double rotation</li>
+                            </ul>
+                        </li>
+                        <li>
+                            If \(X\) is black and has only one red child, fall through to the next level.
+                            <ul>
+                                <li>If we fall onto that red child, we are good to go.</li>
+                                <li>If we fall onto the other black child, perform a rotation (which we call "drop and rotate").</li>
+                            </ul>
+                        </li>
+                        <li>If \(X\) is red or has two red children, move on to the next level.</li>
+                        <li>If the root is made red in the process, recolor it black.</li>
+                    </ul>
+                    </p>
+                    The current node is <span class="highlight">highlighted</span> in the below illustrations.
+                    Do note that the current node at which each operation occurs in deletion differs from that in insertion.
+                    Furthermore, the node colors after rotation are also different.
+
+                    <!-- COLOR FLIP -->
+                    <h2>Color flip</h2>
+                    <strong>
+                        If \(X\) and \(T\) are black, both have two black children and their parent \(P\) is red,
+                        we perform a color flip at \(X\), making \(X\) and \(T\) red while \(P\) black.
+                    </strong>
+                    <canvas id="colorFlipDeletion"></canvas>
+
+                    <!-- SINGLE ROTATION DELETION-->
+                    <h2>Single rotation</h2>
+                    <strong>
+                        If \(X\)'s sibling \(T\) has an outer red child (or two red children),
+                        we rotate \(T\) and its child to make \(X\) red.
+                        Note that the current node is still \(X\) in this case.
+                    </strong>
+                    <canvas id="singleRotationDeletion"></canvas>
+
+                    <!-- DOUBLE ROTATION DELETION -->
+                    <h2>Double rotation</h2>
+                    <strong>
+                        If \(X\)'s sibling \(T\) has an inner red child, we rotate \(T\) and its child to make \(X\) red.
+                        Note that the current node is still \(X\) in this case.
+                    </strong>
+                    <canvas id="doubleRotationDeletion"></canvas>
+
+                    <h2>Switch value</h2>
+                    <strong>Once we have arrived at the node we want to delte \(X\),
+                        we switch the value of \(X\) with the rightmost node in its left subtree.
+                    </strong>
+                    <canvas id="switchValue"></canvas>
+
+                    <h2>Drop and rotate</h2>
+                    <strong>
+                        If \(X\) is black, has one red child but we are going in the direction of the black child,
+                        we first drop to the black child, then perform rotation on its parent (the former \(X\))
+                        and sibling (the former red child).
+                    </strong>
+                    <p>Note that after rotation the current node is still black, but we are one level deeper.</p>
+                    <canvas id="dropAndRotate"></canvas>
 
                     <h2>References</h2>
                     Weiss, M. A. (2010). <cite>Data structures & problem solving using Java</cite>. Boston : Pearson/Addison Wesley, c2010.
-                    <br>          
+                    <br>
                     <a href="http://www.freepik.com/free-photos-vectors/background">Background vector designed by Freepik and Wassim Gharbi.</a>
                 </div>
             </div>

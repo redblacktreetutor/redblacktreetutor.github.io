@@ -9,11 +9,16 @@ $(document).ready(function() {
 // init and draw
 function init() {
 	drawWorstBinaryTree();
-	drawColorFlip();
+	drawColorFlipInsertion();
 	drawOuterNode();
 	drawInnerNode();
-	drawSingleRotation();
-	drawDoubleRotation();
+	drawSingleRotationInsertion();
+	drawDoubleRotationInsertion();
+	drawColorFlipDeletion()
+	drawSingleRotationDeletion()
+	drawDoubleRotationDeletion()
+	drawSwitchValue()
+	drawDropAndRotate()
 }
 
 function drawWorstBinaryTree() {
@@ -30,9 +35,9 @@ function drawWorstBinaryTree() {
 	tree.draw();
 }
 
-function drawColorFlip() {
-	var colorFlipCanvas = $('#colorFlip')[0];
-	colorFlipCanvas.width = $('#colorFlip').parent().outerWidth();
+function drawColorFlipInsertion() {
+	var colorFlipCanvas = $('#colorFlipInsertion')[0];
+	colorFlipCanvas.width = $('#colorFlipInsertion').parent().outerWidth();
 	colorFlipCanvas.height = 200;
 
 	var ctx = colorFlipCanvas.getContext('2d');
@@ -104,9 +109,9 @@ function drawOuterNode() {
 	secondCaseTree.highlightCurrentNode( 3 );
 }
 
-function drawSingleRotation() {
-	var singleRotationCanvas = $('#singleRotation')[0];
-	singleRotationCanvas.width = $('#singleRotation').parent().outerWidth();
+function drawSingleRotationInsertion() {
+	var singleRotationCanvas = $('#singleRotationInsertion')[0];
+	singleRotationCanvas.width = $('#singleRotationInsertion').parent().outerWidth();
 	singleRotationCanvas.height = 400;
 
 	var ctx = singleRotationCanvas.getContext('2d');
@@ -133,9 +138,9 @@ function drawSingleRotation() {
 	// arrow(ctx, p1, p2);
 }
 
-function drawDoubleRotation() {
-	var doubleRotationCanvas = $('#doubleRotation')[0];
-	doubleRotationCanvas.width = $('#doubleRotation').parent().outerWidth();
+function drawDoubleRotationInsertion() {
+	var doubleRotationCanvas = $('#doubleRotationInsertion')[0];
+	doubleRotationCanvas.width = $('#doubleRotationInsertion').parent().outerWidth();
 	doubleRotationCanvas.height = 400;
 
 	var ctx = doubleRotationCanvas.getContext('2d');
@@ -161,6 +166,138 @@ function drawDoubleRotation() {
 	// var p2 = afterTree.findEndingArrowPosition();
 	// arrow(ctx, p1, p2);
 }
+
+
+function drawColorFlipDeletion() {
+    var colorFlipCanvas = $('#colorFlipDeletion')[0];
+    colorFlipCanvas.width = $('#colorFlipDeletion').parent().outerWidth();
+    colorFlipCanvas.height = 230;
+
+    var ctx = colorFlipCanvas.getContext('2d');
+    ctx.font = '20px Arial';
+
+    var array = [5, 3, 7];
+    var beforeTree = new BinarySearchTree( array, ctx, 300, 100 );
+    beforeTree.addAll();
+    beforeTree.setColors( {5: red, 3: black, 7: black});
+    beforeTree.draw();
+    beforeTree.highlightCurrentNode( 3 );
+    beforeTree.setCaption( "Tree before color flip" );
+
+    var afterTree = new BinarySearchTree( array, ctx, 700, 100 );
+    afterTree.addAll();
+    afterTree.setColors( {5: black, 3: red, 7: red} );
+    afterTree.draw();
+    afterTree.highlightCurrentNode( 3 );
+    afterTree.setCaption( "Tree after color flip" );
+}
+
+
+function drawSingleRotationDeletion() {
+    var singleRotationCanvas = $('#singleRotationDeletion')[0];
+	singleRotationCanvas.width = $('#singleRotationDeletion').parent().outerWidth();
+	singleRotationCanvas.height = 500;
+
+	var ctx = singleRotationCanvas.getContext('2d');
+	ctx.font = '20px Arial';
+
+	var array1 = [30, 20, 40, 15, 25, 35, 45];
+	var beforeTree = new BinarySearchTree( array1, ctx, 50, 100 );
+	beforeTree.addAll();
+	beforeTree.setColors( {30: red, 20: black, 40: black, 15: black, 25: black, 35: black, 45: red} );
+	beforeTree.draw();
+	beforeTree.setCaption("Tree before rotation");
+	beforeTree.highlightCurrentNode( 20 );
+
+	var array2 = [40, 30, 45, 20, 35, 15, 25]
+	var afterTree = new BinarySearchTree( array2, ctx, 600, 100 );
+	afterTree.addAll();
+	afterTree.setColors( {40: red, 30: black, 45: black, 20: red, 35: black, 15: black, 25: black} );
+	afterTree.draw();
+	afterTree.setCaption("Tree after rotation");
+	afterTree.highlightCurrentNode( 20 );
+}
+
+
+function drawDoubleRotationDeletion() {
+	var doubleRotationCanvas = $('#doubleRotationDeletion')[0];
+	doubleRotationCanvas.width = $('#doubleRotationDeletion').parent().outerWidth();
+	doubleRotationCanvas.height = 500;
+
+	var ctx = doubleRotationCanvas.getContext('2d');
+	ctx.font = '20px Arial';
+
+	var array1 = [30, 20, 35, 15, 25, 32, 40];
+	var beforeTree = new BinarySearchTree( array1, ctx, 50, 100 );
+	beforeTree.addAll();
+	beforeTree.setColors( {30: red, 20: black, 35: black, 15: black, 25: black, 32: red, 40: black} );
+	beforeTree.draw();
+	beforeTree.setCaption("Tree before rotation");
+	beforeTree.highlightCurrentNode( 20 );
+
+	var array2 = [32, 30, 35, 20, 40, 15, 25];
+	var afterTree = new BinarySearchTree( array2, ctx, 600, 100 );
+	afterTree.addAll();
+	afterTree.setColors({32: red, 30: black, 35: black, 20: red, 40: black, 15: black, 25: black});
+	afterTree.draw();
+	afterTree.setCaption("Tree after rotation");
+	afterTree.highlightCurrentNode( 20 );
+
+	// var p1 = beforeTree.findStartingArrowPosition();
+	// var p2 = afterTree.findEndingArrowPosition();
+	// arrow(ctx, p1, p2);
+}
+
+
+function drawSwitchValue() {
+    var switchValueCanvas = $('#switchValue')[0];
+    switchValueCanvas.width = $('#switchValue').parent().outerWidth();
+    var ctx = switchValueCanvas.getContext('2d');
+    switchValueCanvas.height = 300;
+	ctx.font = '20px Arial';
+
+	var array1 = [30, 20, 40, 25];
+	var beforeTree = new BinarySearchTree( array1, ctx, 50, 100 );
+	beforeTree.addAll();
+	beforeTree.setColors({30: black, 20: black, 40: black, 25: red});
+	beforeTree.draw();
+	beforeTree.setCaption("Delete node 30");
+	beforeTree.highlightCurrentNode( 30 );
+
+	var array2 = [25, 20, 40, 22]
+	var afterTree = new BinarySearchTree( array2, ctx, 500, 100 );
+	afterTree.addAll();
+	afterTree.setColors({25: black, 20: black, 40: black, 22: red});
+	afterTree.setNodeValue( 22, 30 );
+	afterTree.draw();
+	afterTree.setCaption("After switching value");
+	afterTree.highlightCurrentNode( 25 );
+}
+
+function drawDropAndRotate() {
+    var dropAndRotateCanvas = $('#dropAndRotate')[0];
+    dropAndRotateCanvas.width = $('#dropAndRotate').parent().outerWidth();
+    dropAndRotateCanvas.height = 300;
+    var ctx = dropAndRotateCanvas.getContext('2d');
+	ctx.font = '20px Arial';
+
+	var array1 = [30, 20, 40, 35, 45];
+	var beforeTree = new BinarySearchTree( array1, ctx, 50, 100 );
+	beforeTree.addAll();
+	beforeTree.setColors({30: black, 20: black, 40: red, 35: black, 45: black});
+	beforeTree.draw();
+	beforeTree.setCaption("Delete node 20");
+	beforeTree.highlightCurrentNode( 30 );
+
+	var array2 = [40, 30, 45, 20, 35]
+	var afterTree = new BinarySearchTree( array2, ctx, 700, 100 );
+	afterTree.addAll();
+	afterTree.setColors({40: black, 30: red, 20: black, 35: black, 45: black});
+	afterTree.draw();
+	afterTree.setCaption("After drop and rotate:");
+	afterTree.highlightCurrentNode( 20 );
+}
+
 
 function arrow(ctx, p1, p2) {
     ctx.save();

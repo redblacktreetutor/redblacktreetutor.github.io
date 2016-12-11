@@ -12,6 +12,10 @@ function Node(value, color, left, right, parent) {
 		this.color = color;
 	}
 
+	this.setValue = function( value ) {
+	    this.value = value;
+	}
+
 	this.draw = function( ctx ) {
 
 		ctx.strokeStyle = "black";
@@ -38,7 +42,7 @@ function Node(value, color, left, right, parent) {
 		ctx.fillStyle = this.color;
 		ctx.fill();
 		ctx.fillStyle = "white";
-		ctx.fillText( value, this.x - this.RADIUS / 4 + ((value/10)<1?0:-5), this.y + this.RADIUS / 4);
+		ctx.fillText( this.value, this.x - this.RADIUS / 4 + ((value/10)<1?0:-5), this.y + this.RADIUS / 4);
 		ctx.closePath();
 		if ( this.left !== null ) {
 			this.left.draw( ctx );
@@ -165,6 +169,10 @@ function BinarySearchTree(array, ctx, startX, startY) {
 
 	this.setNodeColor = function (val, color) {
 		find( val ).setColor( color );
+	}
+
+	this.setNodeValue = function( val, newVal) {
+	    find( val ).setValue( newVal )
 	}
 
 	this.addAll = function () {
