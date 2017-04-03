@@ -128,7 +128,7 @@ function drawSingleRotationInsertion() {
 	var array2 = [20, 10, 30, 5, 15, 25, 35];
 	var afterTree = new BinarySearchTree( array2, ctx, 700, 100 );
 	afterTree.addAll();
-	afterTree.setColors( {10: red, 5: black, 20: red, 15: black, 30: red, 25: black, 35: black} );
+	afterTree.setColors( {10: red, 5: black, 20: black, 15: black, 30: red, 25: black, 35: black} );
 	afterTree.draw();
 	afterTree.setCaption("Tree after rotation");
 	afterTree.highlightCurrentNode( 30 );
@@ -196,23 +196,23 @@ function drawColorFlipDeletion() {
 function drawSingleRotationDeletion() {
     var singleRotationCanvas = $('#singleRotationDeletion')[0];
 	singleRotationCanvas.width = $('#singleRotationDeletion').parent().outerWidth();
-	singleRotationCanvas.height = 500;
+	singleRotationCanvas.height = 800;
 
 	var ctx = singleRotationCanvas.getContext('2d');
 	ctx.font = '20px Arial';
 
-	var array1 = [30, 20, 40, 15, 25, 35, 45];
-	var beforeTree = new BinarySearchTree( array1, ctx, 50, 100 );
+	var array1 = [30, 20, 40, 15, 25, 35, 45, 43, 47];
+	var beforeTree = new BinarySearchTree( array1, ctx, 300, 100 );
 	beforeTree.addAll();
-	beforeTree.setColors( {30: red, 20: black, 40: black, 15: black, 25: black, 35: black, 45: red} );
+	beforeTree.setColors( {30: red, 20: black, 40: black, 15: black, 25: black, 35: black, 45: red, 43: black, 47: black} );
 	beforeTree.draw();
 	beforeTree.setCaption("Tree before rotation");
 	beforeTree.highlightCurrentNode( 20 );
 
-	var array2 = [40, 30, 45, 20, 35, 15, 25]
-	var afterTree = new BinarySearchTree( array2, ctx, 600, 100 );
+	var array2 = [40, 30, 45, 20, 35, 43, 47, 15, 25]
+	var afterTree = new BinarySearchTree( array2, ctx, 300, 500 );
 	afterTree.addAll();
-	afterTree.setColors( {40: red, 30: black, 45: black, 20: red, 35: black, 15: black, 25: black} );
+	afterTree.setColors( {40: red, 30: black, 45: black, 20: red, 35: black, 15: black, 25: black, 43: black, 47: black} );
 	afterTree.draw();
 	afterTree.setCaption("Tree after rotation");
 	afterTree.highlightCurrentNode( 20 );
@@ -222,23 +222,23 @@ function drawSingleRotationDeletion() {
 function drawDoubleRotationDeletion() {
 	var doubleRotationCanvas = $('#doubleRotationDeletion')[0];
 	doubleRotationCanvas.width = $('#doubleRotationDeletion').parent().outerWidth();
-	doubleRotationCanvas.height = 500;
+	doubleRotationCanvas.height = 800;
 
 	var ctx = doubleRotationCanvas.getContext('2d');
 	ctx.font = '20px Arial';
 
-	var array1 = [30, 20, 35, 15, 25, 32, 40];
-	var beforeTree = new BinarySearchTree( array1, ctx, 50, 100 );
+	var array1 = [30, 20, 35, 15, 25, 32, 40, 31, 33];
+	var beforeTree = new BinarySearchTree( array1, ctx, 300, 100 );
 	beforeTree.addAll();
-	beforeTree.setColors( {30: red, 20: black, 35: black, 15: black, 25: black, 32: red, 40: black} );
+	beforeTree.setColors( {30: red, 20: black, 35: black, 15: black, 25: black, 32: red, 40: black, 31: black, 33: black} );
 	beforeTree.draw();
 	beforeTree.setCaption("Tree before rotation");
 	beforeTree.highlightCurrentNode( 20 );
 
-	var array2 = [32, 30, 35, 20, 40, 15, 25];
-	var afterTree = new BinarySearchTree( array2, ctx, 600, 100 );
+	var array2 = [32, 30, 35, 20, 31, 33, 40, 15, 25];
+	var afterTree = new BinarySearchTree( array2, ctx, 300, 500 );
 	afterTree.addAll();
-	afterTree.setColors({32: red, 30: black, 35: black, 20: red, 40: black, 15: black, 25: black});
+	afterTree.setColors({32: red, 30: black, 35: black, 20: red, 40: black, 15: black, 25: black, 31: black, 33: black});
 	afterTree.draw();
 	afterTree.setCaption("Tree after rotation");
 	afterTree.highlightCurrentNode( 20 );
@@ -256,22 +256,22 @@ function drawSwitchValue() {
     switchValueCanvas.height = 300;
 	ctx.font = '20px Arial';
 
-	var array1 = [30, 20, 40, 25];
-	var beforeTree = new BinarySearchTree( array1, ctx, 50, 100 );
+	var array1 = [30, 20, 40, 35];
+	var beforeTree = new BinarySearchTree( array1, ctx, 200, 100 );
 	beforeTree.addAll();
-	beforeTree.setColors({30: black, 20: black, 40: black, 25: red});
+	beforeTree.setColors({30: black, 20: black, 40: black, 35: red});
 	beforeTree.draw();
 	beforeTree.setCaption("Delete node 30");
 	beforeTree.highlightCurrentNode( 30 );
 
-	var array2 = [25, 20, 40, 22]
-	var afterTree = new BinarySearchTree( array2, ctx, 500, 100 );
+	var array2 = [35, 20, 40, 37]
+	var afterTree = new BinarySearchTree( array2, ctx, 600, 100 );
 	afterTree.addAll();
-	afterTree.setColors({25: black, 20: black, 40: black, 22: red});
-	afterTree.setNodeValue( 22, 30 );
+	afterTree.setColors({35: black, 20: black, 40: black, 37: red});
+	afterTree.setNodeValue( 37, 30 );
 	afterTree.draw();
 	afterTree.setCaption("After switching value");
-	afterTree.highlightCurrentNode( 25 );
+	afterTree.highlightCurrentNode( 35 );
 }
 
 function drawDropAndRotate() {
@@ -282,7 +282,7 @@ function drawDropAndRotate() {
 	ctx.font = '20px Arial';
 
 	var array1 = [30, 20, 40, 35, 45];
-	var beforeTree = new BinarySearchTree( array1, ctx, 50, 100 );
+	var beforeTree = new BinarySearchTree( array1, ctx, 200, 100 );
 	beforeTree.addAll();
 	beforeTree.setColors({30: black, 20: black, 40: red, 35: black, 45: black});
 	beforeTree.draw();
@@ -294,7 +294,7 @@ function drawDropAndRotate() {
 	afterTree.addAll();
 	afterTree.setColors({40: black, 30: red, 20: black, 35: black, 45: black});
 	afterTree.draw();
-	afterTree.setCaption("After drop and rotate:");
+	afterTree.setCaption("After drop and rotate");
 	afterTree.highlightCurrentNode( 20 );
 }
 
